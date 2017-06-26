@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="100dp"
+            android:id="@+id/item_shop_btn1"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/item_text5"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="100dp"
+            android:id="@+id/item_shop_btn2"
+            android:visibility="invisible"
+            />
+
+        <TextView
+            android:id="@+id/item_text6"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

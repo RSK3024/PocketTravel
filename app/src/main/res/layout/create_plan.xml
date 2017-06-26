@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="jp.co.ivis.pockettravel.CreatePlanActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/myPlan"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/destination"
+            android:textSize="20sp"/>
+
+        <RelativeLayout
+            android:id="@+id/dropdown_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/destination_text"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="#AFEEEE"
+                android:gravity="center"
+                android:textSize="20sp"/>
+
+            <com.mikepenz.iconics.view.IconicsButton
+                android:id="@+id/dropdown_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:text="{ion-ios-arrow-down}"
+                android:textSize="30sp"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="@string/start_date"
+            android:textSize="20sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            >
+
+            <TextView
+                android:id="@+id/startDate_text"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:background="#AFEEEE"
+                android:textSize="20sp" />
+
+            <com.mikepenz.iconics.view.IconicsButton
+                android:id="@+id/startDate_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:text="{oct-calendar}"
+                android:textSize="30sp"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp">
+
+        <Button
+            android:id="@+id/create_plan_rtn_btn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/back"/>
+
+        <Button
+            android:id="@+id/create_plan_next_btn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:text="@string/next"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="jp.co.ivis.pockettravel.CreateModeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/routePlan"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/recommend_btn"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="150dp"
+        android:background="#FFDAB9"
+        android:text="@string/recommendMode"/>
+
+    <Button
+        android:id="@+id/diy_btn"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="100dp"
+        android:background="#AFEEEE"
+        android:text="@string/diyMode"/>
+    
+    <Button
+        android:id="@+id/create_mode_rtn_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:text="@string/back"/>
+
+</LinearLayout>

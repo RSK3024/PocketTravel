@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>SearchAndGuide</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<style>
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+	overflow-y: hidden;
+}
+
+#map {
+	height: calc(100% - 35px);
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.controls {
+	border: 1px solid transparent;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	height: 32px;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#mode-selector {
+	color: #fff;
+	background-color: #4d90fe;
+	/*  margin-left: 12px;*/
+	padding: 5px 11px 0px 11px;
+}
+
+#mode-selector label {
+	font-family: Roboto;
+	font-size: 19px;
+	font-weight: 300;
+}
+</style>
+</head>
+<body>
+
+<div id="mode-selector" class="controls">
+	<input type="radio" name="type" id="changemode-walking"
+		   checked="checked" value="WALKING"> <label
+		for="changemode-walking">徒歩</label> <input type="radio"
+												   name="type" id="changemode-driving" value="DRIVING"> <label
+		for="changemode-driving">車    </label>
+</div>
+
+<div id="map"></div>
+<script>
+		var map;
+		var infowindow;
+		var MARKER_PATH = 'https://maps.gstatic.com/intl/en_us/mapfiles/marker_green';
+		var markerIcon = MARKER_PATH + '.png';
+		var origin_place_lat;
+		var origin_place_lng;
+		var origin_place;
+		var destination;
+		var destination_place;
+		var destination_mark;
+		var directionsService;
+		var directionsDisplay;
+		var service;
+
+		function initLocation() {
+			window.routeGuide.routeGuideInit();
+			alert("Waiting location");
+			setTimeout(function() {
+				initMap()
+			}, 200);
+		}
+		function initMap() {
+
+			origin_place = new google.maps.LatLng(origin_place_lat,
+					origin_place_lng);
+			map = new google.maps.Map(document.getElementById('map'), {
+				center : origin_place,
+				zoom : 15
+			});
+
+			directionsService = new google.maps.DirectionsService;
+			directionsDisplay = new google.maps.DirectionsRenderer;
+			directionsDisplay.setMap(map);
+
+			infowindow = new google.maps.InfoWindow();
+			var marker = new google.maps.Marker({
+				icon : markerIcon,
+				position : origin_place,
+				map : map,
+			});
+
+			marker.addListener('click', function() {
+				infowindow.setContent('現在地');
+				infowindow.open(map, marker);
+			});
+
+			document.getElementById('changemode-driving').addEventListener(
+					'click',
+					function() {
+						calculateAndDisplayRoute(directionsService,
+								directionsDisplay);
+					});
+			document.getElementById('changemode-walking').addEventListener(
+					'click',
+					function() {
+						calculateAndDisplayRoute(directionsService,
+								directionsDisplay);
+					});
+
+			window.routeGuide.destinationInit();
+			window.routeGuide.routeGuideAct();
+		}
+
+		function markerDestination() {
+			if(destination_mark!=null) {
+				destination_mark.setMap(null);
+			}
+			destination_mark = new google.maps.Marker({
+				map : map,
+				animation : google.maps.Animation.DROP,
+				position : destination_place.geometry.location
+			});
+			setTimeout(function() {
+				destination_mark.setAnimation(google.maps.Animation.BOUNCE)
+			}, 800);
+			infowindow.setContent(destination_place.name
+					+ '<h3>距離：'
+					+ Math.round(google.maps.geometry.spherical
+							.computeDistanceBetween(
+									destination_place.geometry.location,
+									origin_place)) + 'm</h3>');
+			infowindow.open(map, destination_mark);
+			destination_mark.addListener('click', function() {
+				if (destination_mark.getAnimation() !== null) {
+					destination_mark.setAnimation(null);
+				} else {
+					destination_mark.setAnimation(google.maps.Animation.BOUNCE);
+				}
+				infowindow.setContent(destination_place.name
+						+ '<h3>距離：'
+						+ Math.round(google.maps.geometry.spherical
+								.computeDistanceBetween(
+										destination_place.geometry.location,
+										origin_place)) + 'm</h3>');
+				infowindow.open(map, this);
+			});
+		}
+
+		function callback(place, status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				// window.routeGuide.getDetails(place.formatted_address, place.name, place.website);
+				// window.routeGuide.onGetDetailsDown();
+			} else {
+				window.alert("詳細情報が取得できなかった");
+			}
+		}
+
+		function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+			var modes = document.getElementsByName('type');
+			for (var i = 0; i < modes.length; i++) {
+				if (modes[i].checked == true) {
+					var travel_mode = modes[i].value;
+				}
+			}
+			directionsService.route({
+				origin : origin_place,
+				destination : destination_place.geometry.location,
+				travelMode : google.maps.TravelMode[travel_mode]
+			}, function(response, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setDirections(response);
+				} else {
+					window.alert('Directions request failed due to ' + status);
+				}
+			});
+		}
+
+		function setOrigin(place_lat, place_lng) {
+			origin_place_lat = place_lat;
+			origin_place_lng = place_lng;
+		}
+
+		function guide(destination_value) {
+		    destination=destination_value;
+			var destination_request = {
+				query : destination
+			};
+
+			service = new google.maps.places.PlacesService(map);
+			service.textSearch(destination_request, function(results, status) {
+				if (status == google.maps.places.PlacesServiceStatus.OK) {
+					destination_place = results[0];
+					details_request = {
+						placeId : destination_place.place_id
+					};
+					service.getDetails(details_request, callback);
+					markerDestination();
+					setTimeout(function() {
+						calculateAndDisplayRoute(directionsService,
+								directionsDisplay)
+					}, 800);
+				} else {
+					window.routeGuide.notFound();
+				}
+			});
+		}
+
+	</script>
+</head>
+<body>
+<div id="map"></div>
+<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2MndnCGBXqDolsrQYhNdVyXqsk0NRm8Q&signed_in=true&libraries=places&callback=initLocation"
+		async defer></script>
+</body>
+</html>

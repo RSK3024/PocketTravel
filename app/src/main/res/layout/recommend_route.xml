@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="jp.co.ivis.pockettravel.RecommendRouteActivity"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/recommendRoute"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+    
+    <LinearLayout
+        android:id="@+id/recommend_route_button_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/recommend_route_rtn_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="150dp"
+        android:text="@string/back" />
+
+</LinearLayout>

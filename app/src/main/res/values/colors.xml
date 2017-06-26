@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="AliceBlue">#F0F8FF</color>
+    <color name="Azure">#F0FFFF</color>
+    <color name="PaleTurquoise">#AFEEEE</color>
+    <color name="MediumTurquoise">#48D1CC</color>
+    <color name="Turquoise">#40E0D0</color>
+    <color name="gary81">#CFCFCF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#FFFF1826</color>
+    <color name="right_grey">#D4D4D4</color>
+    <color name="grey">#B1B1B1</color>
+    <color name="deep_grey">#969696</color>
+    <color name="whites">#ffffff</color>
+    <color name="gray">#AFAFAF</color>
+    <color name="yellow">#F99503</color>
+    <color name="gray_color">#ffe8ecef</color>
+</resources>

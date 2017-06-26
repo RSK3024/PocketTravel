@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.3'
+    defaultConfig {
+        applicationId "jp.co.ivis.pockettravel"
+        minSdkVersion 19
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile "com.mikepenz:iconics-core:2.8.7@aar"
+    compile "com.android.support:appcompat-v7:25.3.1"
+
+    compile 'com.mikepenz:google-material-typeface:3.0.1.1.original@aar'
+    compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.3@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.7.0.1@aar'
+    compile 'com.mikepenz:octicons-typeface:3.2.0.3@aar'
+    compile 'com.mikepenz:meteocons-typeface:1.1.0.3@aar'
+    compile 'com.mikepenz:community-material-typeface:1.9.32.2@aar'
+    compile 'com.mikepenz:weather-icons-typeface:2.0.10.3@aar'
+    compile 'com.mikepenz:typeicons-typeface:2.0.7.3@aar'
+    compile 'com.mikepenz:entypo-typeface:1.0.0.3@aar'
+    compile 'com.mikepenz:devicon-typeface:2.0.0.3@aar'
+    compile 'com.mikepenz:foundation-icons-typeface:3.0.0.3@aar'
+    compile 'com.mikepenz:ionicons-typeface:2.0.1.3@aar'
+    compile 'com.mikepenz:pixeden-7-stroke-typeface:1.2.0.1@aar'
+}

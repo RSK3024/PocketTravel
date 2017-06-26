@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="jp.co.ivis.pockettravel">
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CityActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".PlaceActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ItemActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".LikeListActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".CreatePlanActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".CreateModeActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".RecommendRouteActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".RecommendRouteDetailsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".DiyRouteActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".PlaceSelectActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".DiyRoutePlanDetailsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MyScheduleActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MyScheduleDetailsActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name="MapActivity"
+            android:label="MapActivity"/>
+    </application>
+
+</manifest>

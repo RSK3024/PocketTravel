@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginTop="100dp">
+
+            <ImageView
+                android:id="@+id/lun_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_launcher"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ポケ旅"
+                android:textSize="50dp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/lun_img"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/city_btn"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="美食と名所のお勧め"
+            android:layout_marginTop="100dp"
+            android:background="#FFDAB9"/>
+
+        <Button
+            android:id="@+id/create_plan_btn"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="旅行プランの作成"
+            android:layout_marginTop="50dp"
+            android:background="#330000ff"/>
+
+        <Button
+            android:id="@+id/schedule_btn"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="スケジュール管理"
+            android:layout_marginTop="50dp"
+            android:background="#AFEEEE"/>
+
+        <Button
+            android:id="@+id/map_btn"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:text="GPSガイド"
+            android:layout_marginTop="50dp"
+            android:background="#FFC1C1"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+

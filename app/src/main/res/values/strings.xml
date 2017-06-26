@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">ポケ旅</string>
+    <string name="myPlan">My プラン</string>
+    <string name="destination">行先</string>
+    <string name="start_date">開始日</string>
+    <string name="back">戻る</string>
+    <string name="next">次へ</string>
+    <string name="routePlan">路線プラン</string>
+    <string name="recommendMode">おすすめ</string>
+    <string name="diyMode">日程DIY</string>
+    <string name="recommendRoute">お勧め路線</string>
+    <string name="recommendDetails">具体日程</string>
+    <string name="add">追加</string>
+    <string name="end">終わった</string>
+    <string name="title_activity_diy_route">DiyRouteActivity</string>
+    <string name="travetDays">旅行日数：</string>
+    <string name="likeList">LikeList</string>
+    <string name="all">すべて</string>
+    <string name="sureDate">日付指定</string>
+
+</resources>
