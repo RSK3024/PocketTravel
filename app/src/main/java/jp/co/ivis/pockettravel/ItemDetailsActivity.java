@@ -27,6 +27,7 @@ public class ItemDetailsActivity extends Activity {
     private TextView textView2;
     private TextView textView3;
     private Button item_details_rtnBtn;
+    private String itemAddress;
 
 
     public ItemDetailsActivity() {
@@ -40,7 +41,7 @@ public class ItemDetailsActivity extends Activity {
         textView1 = (TextView) findViewById(R.id.item_details_text1);
         textView2 = (TextView) findViewById(R.id.item_details_text2);
         textView3 = (TextView) findViewById(R.id.item_details_text3);
-        Button item_details_rtnBtn = (Button)findViewById(R.id.item_details_rtn_btn);
+        item_details_rtnBtn = (Button)findViewById(R.id.item_details_rtn_btn);
         item_details_rtnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +65,7 @@ public class ItemDetailsActivity extends Activity {
         else {
             photo = ItemDetailsActivity.this.getResources().getIdentifier(itemPhoto,"drawable","jp.co.ivis.pockettravel");
         }
-        String itemAddress = cursor.getString(cursor.getColumnIndex("item_address"));
+        itemAddress = cursor.getString(cursor.getColumnIndex("item_address"));
         String itemOpenTime = cursor.getString(cursor.getColumnIndex("item_open_time"));
         String itemTel = cursor.getString(cursor.getColumnIndex("item_tele"));
         testViewtop.setText(itemName);
@@ -76,7 +77,7 @@ public class ItemDetailsActivity extends Activity {
             public void onClick(View view) {
                 intent = new Intent(ItemDetailsActivity.this,MapActivity.class);
                 bundle.putInt("pageFrom",1);
-                bundle.putString("destination",itemName);
+                bundle.putString("destination",itemAddress);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
