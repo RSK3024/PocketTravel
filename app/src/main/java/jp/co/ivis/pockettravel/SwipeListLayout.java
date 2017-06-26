@@ -27,19 +27,10 @@ public class SwipeListLayout extends FrameLayout {
 
     public static final String TAG = "SwipeListLayout";
 
-    // 状态
     public enum Status {
         Open, Close
     }
 
-    /**
-     * 设置侧滑状态
-     *
-     * @param status
-     *            状态 Open or Close
-     * @param smooth
-     *            若为true则有过渡动画，否则没有
-     */
     public void setStatus(Status status, boolean smooth) {
         this.status = status;
         if (status == Status.Open) {
@@ -53,32 +44,16 @@ public class SwipeListLayout extends FrameLayout {
         this.listener = listener;
     }
 
-    /**
-     * 是否设置过渡动画
-     *
-     * @param smooth
-     */
     public void setSmooth(boolean smooth) {
         this.smooth = smooth;
     }
 
     public interface OnSwipeStatusListener {
 
-        /**
-         * 当状态改变时回调
-         *
-         * @param status
-         */
         void onStatusChanged(Status status);
 
-        /**
-         * 开始执行Open动画
-         */
         void onStartCloseAnimation();
 
-        /**
-         * 开始执行Close动画
-         */
         void onStartOpenAnimation();
 
     }
@@ -92,7 +67,6 @@ public class SwipeListLayout extends FrameLayout {
         mDragHelper = ViewDragHelper.create(this, callback);
     }
 
-    // ViewDragHelper的回调
     ViewDragHelper.Callback callback = new ViewDragHelper.Callback() {
 
         @Override
@@ -124,13 +98,10 @@ public class SwipeListLayout extends FrameLayout {
             if (itemView == changedView) {
                 hiddenView.offsetLeftAndRight(dx);
             }
-            // 有时候滑动很快的话 会出现隐藏按钮的linearlayout没有绘制的问题
-            // 为了确保绘制成功 调用 invalidate
             invalidate();
         }
 
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
-            // 向右滑xvel为正 向左滑xvel为负
             if (releasedChild == itemView) {
                 if (xvel == 0
                         && Math.abs(itemView.getLeft()) > hiddenViewWidth / 2.0f) {
@@ -146,12 +117,6 @@ public class SwipeListLayout extends FrameLayout {
     };
     private Status preStatus = Status.Close;
 
-    /**
-     * 侧滑关闭
-     *
-     * @param smooth
-     *            为true则有平滑的过渡动画
-     */
     private void close(boolean smooth) {
         preStatus = status;
         status = Status.Close;
@@ -172,10 +137,6 @@ public class SwipeListLayout extends FrameLayout {
         }
     }
 
-    /**
-     *
-     * @param status
-     */
     private void layout(Status status) {
         if (status == Status.Close) {
             hiddenView.layout(itemWidth, 0, itemWidth + hiddenViewWidth,
@@ -189,12 +150,6 @@ public class SwipeListLayout extends FrameLayout {
         }
     }
 
-    /**
-     * 侧滑打开
-     *
-     * @param smooth
-     *            为true则有平滑的过渡动画
-     */
     private void open(boolean smooth) {
         preStatus = status;
         status = Status.Open;
@@ -218,13 +173,11 @@ public class SwipeListLayout extends FrameLayout {
     @Override
     public void computeScroll() {
         super.computeScroll();
-        // 开始执行动画
         if (mDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
     }
 
-    // 让ViewDragHelper来处理触摸事件
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final int action = ev.getAction();
         if (action == MotionEvent.ACTION_CANCEL) {
@@ -234,7 +187,6 @@ public class SwipeListLayout extends FrameLayout {
         return mDragHelper.shouldInterceptTouchEvent(ev);
     }
 
-    // 让ViewDragHelper来处理触摸事件
     public boolean onTouchEvent(MotionEvent event) {
         mDragHelper.processTouchEvent(event);
         return true;
@@ -243,14 +195,13 @@ public class SwipeListLayout extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        hiddenView = getChildAt(0); // 得到隐藏按钮的linearlayout
-        itemView = getChildAt(1); // 得到最上层的linearlayout
+        hiddenView = getChildAt(0);
+        itemView = getChildAt(1);
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        // 测量子View的长和宽
         itemWidth = itemView.getMeasuredWidth();
         itemHeight = itemView.getMeasuredHeight();
         hiddenViewWidth = hiddenView.getMeasuredWidth();

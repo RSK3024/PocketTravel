@@ -108,7 +108,7 @@ public class PlaceActivity extends Activity implements View.OnClickListener {
         mDots.add(dotFirst);
         mDots.add(dotFSecond);
         oldPosition = 0;
-        mDots.get(oldPosition).setImageResource(R.drawable.dot_focused);
+        mDots.get(oldPosition).setImageResource(R.drawable.dot_normal);
         myPagerAdapter = new MyPagerAdapter(mViews);
         mViewpagerFirst.setAdapter(myPagerAdapter);
         mViewpagerFirst.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -121,8 +121,8 @@ public class PlaceActivity extends Activity implements View.OnClickListener {
             @Override
             public void onPageSelected(int position) {
 
-                mDots.get(oldPosition).setImageResource(R.drawable.dot_normal);
-                mDots.get(position).setImageResource(R.drawable.dot_focused);
+                mDots.get(oldPosition).setImageResource(R.drawable.dot_focused);
+                mDots.get(position).setImageResource(R.drawable.dot_normal);
                 oldPosition = position;
             }
 

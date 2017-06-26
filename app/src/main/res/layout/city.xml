@@ -42,7 +42,7 @@
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/dot_normal" />
+                android:background="@drawable/dot_focused" />
         </LinearLayout>
     </FrameLayout>
 

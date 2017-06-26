@@ -179,7 +179,7 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         mDots.add(dotFirst);
         mDots.add(dotFSecond);
         oldPosition = 0;
-        mDots.get(oldPosition).setImageResource(R.drawable.dot_focused);
+        mDots.get(oldPosition).setImageResource(R.drawable.dot_normal);
         myPagerAdapter = new MyPagerAdapter(upViews);
         upViewPager.setAdapter(myPagerAdapter);
         upViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -191,8 +191,8 @@ public class ItemActivity extends Activity implements View.OnClickListener {
             @Override
             public void onPageSelected(int position) {
 
-                mDots.get(oldPosition).setImageResource(R.drawable.dot_normal);
-                mDots.get(position).setImageResource(R.drawable.dot_focused);
+                mDots.get(oldPosition).setImageResource(R.drawable.dot_focused);
+                mDots.get(position).setImageResource(R.drawable.dot_normal);
                 oldPosition = position;
             }
 
@@ -240,7 +240,7 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         mDots1.add(dotFirst1);
         mDots1.add(dotFSecond1);
         oldPosition = 0;
-        mDots1.get(oldPosition).setImageResource(R.drawable.dot_focused);
+        mDots1.get(oldPosition).setImageResource(R.drawable.dot_normal);
         myPagerAdapter1 = new MyPagerAdapter(downViews);
         downViewPager.setAdapter(myPagerAdapter1);
         downViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -252,8 +252,8 @@ public class ItemActivity extends Activity implements View.OnClickListener {
             @Override
             public void onPageSelected(int position) {
 
-                mDots1.get(oldPosition).setImageResource(R.drawable.dot_normal);
-                mDots1.get(position).setImageResource(R.drawable.dot_focused);
+                mDots1.get(oldPosition).setImageResource(R.drawable.dot_focused);
+                mDots1.get(position).setImageResource(R.drawable.dot_normal);
                 oldPosition = position;
             }
 
