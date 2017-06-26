@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:background="#330000ff"
             android:gravity="center"
-            android:text="删除"/>
+            android:text="削除"/>
     </LinearLayout>
 
     <LinearLayout
@@ -31,8 +31,8 @@
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
             android:clickable="true"
+            android:gravity="center_vertical"
             android:padding="15dp"
             android:text="test" />
     </LinearLayout>
