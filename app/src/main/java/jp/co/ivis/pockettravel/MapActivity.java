@@ -15,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -52,6 +53,9 @@ public class MapActivity extends Activity implements LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+
+        hideBottomUIMenu();
+
         routeGuideWebView = (WebView) findViewById(R.id.webView);
         endButton = (Button) findViewById(R.id.endNavi_btn);
         startButton = (Button) findViewById(R.id.start_btn);
@@ -126,13 +130,7 @@ public class MapActivity extends Activity implements LocationListener {
 
             }
         });
-        // alertDialogBuilder.setOnCancelListener(new
-        // DialogInterface.OnCancelListener() {
-        // @Override
-        // public void onCancel(DialogInterface dialog) {
-        // finish();
-        // }
-        // });
+
         AlertDialog alertDialog = alertDialogBuilder.create();
         // アラートダイアログを表示します
         alertDialog.show();
@@ -230,7 +228,6 @@ public class MapActivity extends Activity implements LocationListener {
 
     }
 
-
     @Override
     public void onLocationChanged(Location location) {
 
@@ -250,4 +247,17 @@ public class MapActivity extends Activity implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+    private void hideBottomUIMenu() {
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
+
 }

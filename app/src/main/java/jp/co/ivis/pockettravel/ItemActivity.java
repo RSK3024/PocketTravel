@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -36,6 +37,10 @@ public class ItemActivity extends Activity implements View.OnClickListener {
     private ViewPager downViewPager;
     private ImageButton[] upitemsBtn=new ImageButton[4];
     private ImageButton[] downitemsBtn=new ImageButton[4];
+    private ImageView dotFirst;
+    private ImageView dotFSecond;
+    private ImageView dotFirst1;
+    private ImageView dotFSecond1;
     private TextView[] upitemText = new TextView[4];
     private TextView[] downitemText = new TextView[4];
     private TextView titleText;
@@ -44,7 +49,6 @@ public class ItemActivity extends Activity implements View.OnClickListener {
     private DBUnit dbUnit;
     private List<View> upViews = new ArrayList<View>();
     private List<View> downViews = new ArrayList<View>();
-    private LayoutInflater mInflater;
     private List<ImageView> mDots;
     private List<ImageView> mDots1;
     private MyPagerAdapter myPagerAdapter;
@@ -69,6 +73,9 @@ public class ItemActivity extends Activity implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item);
+
+        hideBottomUIMenu();
+
         dbUnit = new DBUnit(ItemActivity.this);
         intent = getIntent();
         bundle = intent.getExtras();
@@ -170,14 +177,19 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         }
 
         upViewPager = (ViewPager) findViewById(R.id.viewpager_show3);
-        upViews.add(view1);
-        upViews.add(view2);
+         mDots = new ArrayList<ImageView>();
+         dotFirst = (ImageView) findViewById(R.id.dot_first);
+         dotFSecond = (ImageView) findViewById(R.id.dot_second);
 
-        mDots = new ArrayList<ImageView>();
-        ImageView dotFirst = (ImageView) findViewById(R.id.dot_first);
-        ImageView dotFSecond = (ImageView) findViewById(R.id.dot_second);
-        mDots.add(dotFirst);
-        mDots.add(dotFSecond);
+         upViews.add(view1);
+         mDots.add(dotFirst);
+         if (cursor1.getCount() > 2) {
+             upViews.add(view2);
+             mDots.add(dotFSecond);
+             dotFirst.setVisibility(View.VISIBLE);
+             dotFSecond.setVisibility(View.VISIBLE);
+         }
+
         oldPosition = 0;
         mDots.get(oldPosition).setImageResource(R.drawable.dot_normal);
         myPagerAdapter = new MyPagerAdapter(upViews);
@@ -230,15 +242,20 @@ public class ItemActivity extends Activity implements View.OnClickListener {
             ii++;
         }
         downViewPager = (ViewPager) findViewById(R.id.viewpager_show4);
+         mDots1 = new ArrayList<ImageView>();
+         dotFirst1 = (ImageView) findViewById(R.id.dot_first1);
+         dotFSecond1 = (ImageView) findViewById(R.id.dot_second1);
 
         downViews.add(view3);
-        downViews.add(view4);
+         mDots1.add(dotFirst1);
 
-        mDots1 = new ArrayList<ImageView>();
-        ImageView dotFirst1 = (ImageView) findViewById(R.id.dot_first1);
-        ImageView dotFSecond1 = (ImageView) findViewById(R.id.dot_second1);
-        mDots1.add(dotFirst1);
-        mDots1.add(dotFSecond1);
+         if (cursor2.getCount() > 2) {
+             downViews.add(view4);
+             mDots1.add(dotFSecond1);
+             dotFirst1.setVisibility(View.VISIBLE);
+             dotFSecond1.setVisibility(View.VISIBLE);
+         }
+
         oldPosition = 0;
         mDots1.get(oldPosition).setImageResource(R.drawable.dot_normal);
         myPagerAdapter1 = new MyPagerAdapter(downViews);
@@ -305,4 +322,17 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         AlertDialog alertDialog = alertDialogbuilder.create();
         alertDialog.show();
     }
+
+    private void hideBottomUIMenu() {
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
+
+}

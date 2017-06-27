@@ -19,7 +19,7 @@
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="1"
         android:fitsSystemWindows="true">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +41,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="300dp"
                     android:layout_weight="1">
 
                     <android.support.v4.view.ViewPager
@@ -61,6 +61,7 @@
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_margin="10dp"
+                            android:visibility="invisible"
                             android:background="@drawable/dot_normal" />
 
                         <ImageView
@@ -68,6 +69,7 @@
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_margin="10dp"
+                            android:visibility="invisible"
                             android:background="@drawable/dot_focused" />
 
                     </LinearLayout>
@@ -84,7 +86,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
+                    android:layout_height="300dp"
                     android:layout_weight="1">
 
                     <android.support.v4.view.ViewPager
@@ -104,6 +106,7 @@
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_margin="10dp"
+                            android:visibility="invisible"
                             android:background="@drawable/dot_normal" />
 
                         <ImageView
@@ -111,6 +114,7 @@
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_margin="10dp"
+                            android:visibility="invisible"
                             android:background="@drawable/dot_focused" />
                     </LinearLayout>
                 </FrameLayout>
@@ -124,7 +128,7 @@
     <RelativeLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_marginBottom="30dp">
 
         <Button
             android:id="@+id/item_rtn_btn"

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,8 @@ public class CreatePlanActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan);
 
+        hideBottomUIMenu();
+
         dropDownLayout = findViewById(R.id.dropdown_layout);
         destinationText = (TextView) findViewById(R.id.destination_text);
         startDateText = (TextView) findViewById(R.id.startDate_text);
@@ -114,25 +117,6 @@ public class CreatePlanActivity extends Activity {
                 }
             }
         });
-
-//        TBD
-//
-//        destinationEdit.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
         startDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,41 +286,16 @@ public class CreatePlanActivity extends Activity {
         }
     }
 
-//    private class MyDatePicker extends DatePickerDialog {
-//
-//        public MyDatePicker(Context context, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
-//            super(context, callBack, year, monthOfYear, dayOfMonth);
-//        }
-//
-//        @Override
-//        public void onDateChanged(DatePicker view, int year, int month, int day) {
-//            Date date = new Date();
-//            Date nextDate = new Date();
-//            nextDate.setYear(year - 1900);
-//            nextDate.setMonth(month);
-//            nextDate.setDate(day);
-//            if (view != null) {
-//                if (nextDate.getTime() - date.getTime() <= 0) {
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(0)).getChildAt(2).setEnabled(false);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(1)).getChildAt(2).setEnabled(false);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(2)).getChildAt(2).setEnabled(false);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(0)).getChildAt(1).setEnabled(false);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(1)).getChildAt(1).setEnabled(false);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(2)).getChildAt(1).setEnabled(false);
-//                    super.updateDate(date.getYear() + 1900, date.getMonth(),(date.getDate()));  //更新picker
-//                    super.onDateChanged(view, year, month, day);
-//                } else {
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(0)).getChildAt(2).setEnabled(true);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(1)).getChildAt(2).setEnabled(true);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(2)).getChildAt(2).setEnabled(true);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(0)).getChildAt(1).setEnabled(true);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(1)).getChildAt(1).setEnabled(true);
-//                    ((ViewGroup) ((ViewGroup) view.getChildAt(0)).getChildAt(2)).getChildAt(1).setEnabled(true);
-//                    super.updateDate(year, month, day);
-//                    super.onDateChanged(view, year, month, day);
-//                }
-//            }
-//        }
-//    }
+    private void hideBottomUIMenu() {
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
 
 }
