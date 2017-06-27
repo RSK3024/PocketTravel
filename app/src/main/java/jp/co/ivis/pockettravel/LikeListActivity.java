@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class LikeListActivity extends Activity {
     private DBUnit dbUnit;
     private Intent intent;
     private Button rtnBtn;
+    private TextView hint;
     private Toast toast;
     private ListView like_list;
     private LikeListActivity.LikeAdapter adapter;
@@ -46,10 +48,15 @@ public class LikeListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.like_list);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         like_list = (ListView) findViewById(R.id.like_list);
         rtnBtn = (Button) findViewById(R.id.like_list_ret_btn);
+        hint = (TextView) findViewById(R.id.likelist_hint);
 
         rtnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,9 +69,8 @@ public class LikeListActivity extends Activity {
         dbUnit = new DBUnit(this);
         cursor = dbUnit.getFond();
 
-        adapter = new LikeAdapter(this,cursor);
+        refresh(cursor);
 
-        like_list.setAdapter( adapter);
         like_list.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState){
@@ -97,7 +103,6 @@ public class LikeListActivity extends Activity {
 
         public void onStatusChanged(SwipeListLayout.Status status) {
             if (status == SwipeListLayout.Status.Open) {
-                //若有其他的item的状态为Open，则Close，然后移除
                 if (sets.size() > 0) {
                     for (SwipeListLayout s : sets) {
                         s.setStatus(SwipeListLayout.Status.Close, true);
@@ -187,9 +192,8 @@ public class LikeListActivity extends Activity {
 
                 dbUnit.deleteFond(placeId);
                 cursor = dbUnit.getFond();
-                adapter = new LikeAdapter(LikeListActivity.this,cursor);
-                like_list.setAdapter(adapter);
-                toast = toast.makeText(LikeListActivity.this,TB_M_003,Toast.LENGTH_LONG);
+                refresh(cursor);
+                toast = toast.makeText(LikeListActivity.this,TB_M_003,Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -204,16 +208,12 @@ public class LikeListActivity extends Activity {
 
     }
 
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+    private void refresh(Cursor cursor) {
+        if (cursor.getCount() == 0) {
+            hint.setVisibility(View.VISIBLE);
         }
+        adapter = new LikeAdapter(this,cursor);
+        like_list.setAdapter( adapter);
     }
 
 }

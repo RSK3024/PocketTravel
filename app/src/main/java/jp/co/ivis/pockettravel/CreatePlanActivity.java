@@ -18,11 +18,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,8 +42,6 @@ import static jp.co.ivis.pockettravel.MessageList.TB_M_008;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_010;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_013;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_020;
-import static jp.co.ivis.pockettravel.MessageList.TB_M_021;
-import static jp.co.ivis.pockettravel.MessageList.TB_M_022;
 
 /**
  * Myプラン画面を表示するクラス
@@ -80,7 +79,11 @@ public class CreatePlanActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_plan);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         dropDownLayout = findViewById(R.id.dropdown_layout);
         destinationText = (TextView) findViewById(R.id.destination_text);
@@ -132,16 +135,8 @@ public class CreatePlanActivity extends Activity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        if (year < y) {
-                            toast = toast.makeText(CreatePlanActivity.this,TB_M_020,Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                        else if (year == y && monthOfYear < m) {
-                            toast = toast.makeText(CreatePlanActivity.this,TB_M_021,Toast.LENGTH_LONG);
-                            toast.show();
-                        }
-                        else if (year == y && monthOfYear == m && dayOfMonth < d) {
-                            toast = toast.makeText(CreatePlanActivity.this,TB_M_022,Toast.LENGTH_LONG);
+                        if (year < y || (year == y && monthOfYear < m) || (year == y && monthOfYear == m && dayOfMonth < d)) {
+                            toast = toast.makeText(CreatePlanActivity.this,TB_M_020,Toast.LENGTH_SHORT);
                             toast.show();
                         }
                         else {
@@ -173,11 +168,11 @@ public class CreatePlanActivity extends Activity {
                 String startDate = startDateText.getText().toString();
 
                 if (cityName == null || cityName.equals("")) {
-                    toast = Toast.makeText(CreatePlanActivity.this,TB_M_008,Toast.LENGTH_LONG);
+                    toast = Toast.makeText(CreatePlanActivity.this,TB_M_008,Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else if (startDate == null || startDate.equals("")) {
-                    toast = makeText(CreatePlanActivity.this,TB_M_010,Toast.LENGTH_LONG);
+                    toast = makeText(CreatePlanActivity.this,TB_M_010,Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
@@ -198,7 +193,7 @@ public class CreatePlanActivity extends Activity {
                         startActivity(intent);
                     }
                     else {
-                        toast = makeText(CreatePlanActivity.this,TB_M_013,Toast.LENGTH_LONG);
+                        toast = makeText(CreatePlanActivity.this,TB_M_013,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
@@ -283,18 +278,6 @@ public class CreatePlanActivity extends Activity {
                 }
             });
             return convertView;
-        }
-    }
-
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
         }
     }
 

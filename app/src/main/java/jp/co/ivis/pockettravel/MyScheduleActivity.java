@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class MyScheduleActivity extends Activity {
     private Toast toast;
     private Button rtnBtn;
     private ListView my_schedule;
+    private TextView hint;
     private ScheduleAdapter adapter;
 
     @Override
@@ -47,10 +49,15 @@ public class MyScheduleActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_schedule_activity);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         my_schedule = (ListView) findViewById(R.id.my_schedule);
         rtnBtn = (Button) findViewById(R.id.my_schedule_rtn_btn);
+        hint = (TextView) findViewById(R.id.schedule_hint);
 
         rtnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,9 +70,8 @@ public class MyScheduleActivity extends Activity {
         dbUnit = new DBUnit(this);
         cursor = dbUnit.getSchedule();
 
-        adapter = new ScheduleAdapter(this,cursor);
+        refresh(cursor);
 
-        my_schedule.setAdapter(adapter);
         my_schedule.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState){
@@ -190,9 +196,8 @@ public class MyScheduleActivity extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 dbUnit.deleteSchedule(scheduleId);
                 cursor = dbUnit.getSchedule();
-                adapter = new ScheduleAdapter(MyScheduleActivity.this,cursor);
-                my_schedule.setAdapter(adapter);
-                toast = toast.makeText(MyScheduleActivity.this,TB_M_003,Toast.LENGTH_LONG);
+                refresh(cursor);
+                toast = toast.makeText(MyScheduleActivity.this,TB_M_003,Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -207,16 +212,12 @@ public class MyScheduleActivity extends Activity {
 
     }
 
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
+    private void refresh(Cursor cursor) {
+        if (cursor.getCount() == 0) {
+            hint.setVisibility(View.VISIBLE);
         }
+        adapter = new ScheduleAdapter(this,cursor);
+        my_schedule.setAdapter( adapter);
     }
 
 }

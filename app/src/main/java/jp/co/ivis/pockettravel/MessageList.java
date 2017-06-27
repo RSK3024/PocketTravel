@@ -42,9 +42,8 @@ public class MessageList {
     public static final String TB_M_017 = "検索キーを入力してください。";
     public static final String TB_M_018 = "検索キーで目的地を取得できませんでした。";
     public static final String TB_M_019 = "追加していない日があります。終了してもよろしいですか";
-    public static final String TB_M_020 = "今日以降の年を選択してください！";
-    public static final String TB_M_021 = "今日以降の月を選択してください！";
-    public static final String TB_M_022 = "今日以降の日を選択してください！";
-    public static final String TB_M_023 = "少なくとも一日にして下さい。";
+    public static final String TB_M_020 = "今日以降の日付を選択してください！";
+    public static final String TB_M_021 = "少なくとも一日にして下さい。";
+    public static final String TB_M_022 = "少なくとも一日にプランを立って下さい。";
 
 }

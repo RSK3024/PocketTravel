@@ -47,6 +47,7 @@ import static jp.co.ivis.pockettravel.MessageList.TB_M_008;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_009;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_011;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_019;
+import static jp.co.ivis.pockettravel.MessageList.TB_M_022;
 
 /**
  * 日程DIY場所選択画面を表示するクラス
@@ -181,6 +182,7 @@ public class PlaceSelectActivity extends Activity implements View.OnClickListene
         if (fondCursor.getCount() == 0) {
             TextView textView = new TextView(this);
             textView.setText("気に入る場所がない");
+            textView.setTextSize(15);
             textView.setGravity(Gravity.CENTER);
 
             fondListView.addFooterView(textView);
@@ -309,7 +311,11 @@ public class PlaceSelectActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.place_select_next_btn:
                 cursor = dbUnit.getSubSchedule(scheduleId);
-                if (cursor.getCount() < peroid) {
+                if (cursor.getCount() == 0) {
+                    toast = toast.makeText(PlaceSelectActivity.this,TB_M_022,Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if (cursor.getCount() < peroid) {
                     showAlertDiaglog(PlaceSelectActivity.this,TB_M_019,"注意",2);
                 }
                 else {
@@ -402,7 +408,7 @@ public class PlaceSelectActivity extends Activity implements View.OnClickListene
                             }
                         }
                         else {
-                            toast = toast.makeText(PlaceSelectActivity.this,TB_M_008,Toast.LENGTH_LONG);
+                            toast = toast.makeText(PlaceSelectActivity.this,TB_M_008,Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }

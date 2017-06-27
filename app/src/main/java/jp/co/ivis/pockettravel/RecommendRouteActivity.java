@@ -15,9 +15,10 @@ package jp.co.ivis.pockettravel;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -56,7 +57,11 @@ public class RecommendRouteActivity extends Activity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recommend_route);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         linearLayout = (LinearLayout) findViewById(R.id.recommend_route_button_layout);
         rtnBtn = (Button) findViewById(R.id.recommend_route_rtn_btn);
@@ -103,7 +108,7 @@ public class RecommendRouteActivity extends Activity implements View.OnClickList
 
         Date startDate;
 
-        cursor = dbUnit.getSchedule();
+        Cursor cursor = dbUnit.getSchedule();
 
         while (cursor.moveToNext()) {
 
@@ -148,24 +153,12 @@ public class RecommendRouteActivity extends Activity implements View.OnClickList
                     startActivity(intent);
                 }
                 else {
-                    toast = makeText(RecommendRouteActivity.this,TB_M_013, Toast.LENGTH_LONG);
+                    toast = makeText(RecommendRouteActivity.this,TB_M_013, Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }
         }
 
-    }
-
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
     }
 
 }

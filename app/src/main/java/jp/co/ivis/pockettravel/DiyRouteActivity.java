@@ -15,9 +15,10 @@ package jp.co.ivis.pockettravel;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import static android.widget.Toast.makeText;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_007;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_013;
 import static jp.co.ivis.pockettravel.MessageList.TB_M_014;
-import static jp.co.ivis.pockettravel.MessageList.TB_M_023;
+import static jp.co.ivis.pockettravel.MessageList.TB_M_021;
 
 /**
  * 日程DIY画面を表示するクラス
@@ -59,7 +60,11 @@ public class DiyRouteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.diy_route);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         editText = (EditText) findViewById(R.id.diy_days_edit);
         nextBtn = (Button) findViewById(R.id.diy_route_next_btn);
@@ -79,7 +84,7 @@ public class DiyRouteActivity extends Activity {
                 String peroid = editText.getText().toString();
 
                 if (peroid == null || peroid.equals("")) {
-                    toast = toast.makeText(DiyRouteActivity.this,TB_M_014,Toast.LENGTH_LONG);
+                    toast = toast.makeText(DiyRouteActivity.this,TB_M_014,Toast.LENGTH_SHORT);
                     toast.show();
                 }
                 else {
@@ -88,7 +93,7 @@ public class DiyRouteActivity extends Activity {
                     if (peroidInt <= 5) {
 
                         if (peroidInt == 0) {
-                            toast = makeText(DiyRouteActivity.this,TB_M_023,Toast.LENGTH_LONG);
+                            toast = makeText(DiyRouteActivity.this,TB_M_021,Toast.LENGTH_SHORT);
                             toast.show();
                         }
                         else {
@@ -118,13 +123,13 @@ public class DiyRouteActivity extends Activity {
                                 startActivity(intent);
                             }
                             else {
-                                toast = makeText(DiyRouteActivity.this,TB_M_013,Toast.LENGTH_LONG);
+                                toast = makeText(DiyRouteActivity.this,TB_M_013,Toast.LENGTH_SHORT);
                                 toast.show();
                             }
                         }
                     }
                     else {
-                        toast = makeText(DiyRouteActivity.this,TB_M_007,Toast.LENGTH_LONG);
+                        toast = makeText(DiyRouteActivity.this,TB_M_007,Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
@@ -148,7 +153,7 @@ public class DiyRouteActivity extends Activity {
 
         Date startDate = null;
 
-        cursor = dbUnit.getSchedule();
+        Cursor cursor = dbUnit.getSchedule();
 
         while (cursor.moveToNext()) {
 
@@ -169,18 +174,6 @@ public class DiyRouteActivity extends Activity {
 
         }
         return result;
-    }
-
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
     }
 
 }

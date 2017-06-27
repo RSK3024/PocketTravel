@@ -18,16 +18,31 @@
             android:textSize="25sp"
             android:textStyle="bold"/>
 
-        <ListView
-            android:id="@+id/my_schedule"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:scrollbars="none"
-            android:clickable="true"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
-        </ListView>
+            <TextView
+                android:id="@+id/schedule_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="スケジュールがない!"
+                android:textSize="20sp"
+                android:visibility="invisible"/>
+
+            <ListView
+                android:id="@+id/my_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:clickable="true">
+
+            </ListView>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/my_schedule_rtn_btn"

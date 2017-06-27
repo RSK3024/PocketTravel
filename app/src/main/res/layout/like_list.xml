@@ -18,16 +18,33 @@
             android:textSize="25sp"
             android:textStyle="bold"/>
 
-        <ListView
-            android:id="@+id/like_list"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
-            android:scrollbars="none"
-            android:clickable="true"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
-        </ListView>
+            <TextView
+                android:id="@+id/likelist_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:text="気に入る場所がない!"
+                android:textSize="20sp"
+                android:visibility="invisible"/>
+
+            <ListView
+                android:id="@+id/like_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:scrollbars="none"
+                android:clickable="true"
+                android:layout_weight="1">
+
+            </ListView>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/like_list_ret_btn"

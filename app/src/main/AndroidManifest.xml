@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,49 +25,64 @@
         </activity>
         <activity
             android:name=".CityActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".PlaceActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".ItemActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".ItemDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".LikeListActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".CreatePlanActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".CreateModeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".RecommendRouteActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".RecommendRouteDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".DiyRouteActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".PlaceSelectActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".DiyRoutePlanDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".MyScheduleActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".MyScheduleDetailsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name="MapActivity"
-            android:label="MapActivity"/>
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -74,7 +75,11 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item);
 
-        hideBottomUIMenu();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        window.setAttributes(params);
 
         dbUnit = new DBUnit(ItemActivity.this);
         intent = getIntent();
@@ -91,7 +96,7 @@ public class ItemActivity extends Activity implements View.OnClickListener {
         cursor2=dbUnit.getItem(placeId,1);
         System.out.println(placeId + "------------------");
         if (cursor1.getCount() == 0 && cursor2.getCount() == 0) {
-            toast = toast.makeText(ItemActivity.this,"項目がない",Toast.LENGTH_LONG);
+            toast = toast.makeText(ItemActivity.this,"項目がない",Toast.LENGTH_SHORT);
             toast.show();
             intent = new Intent(ItemActivity.this,PlaceActivity.class);
             intent.putExtras(bundle);
@@ -308,7 +313,7 @@ public class ItemActivity extends Activity implements View.OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 dbUnit.addFond(placeId);
                 msg_1 = place +TB_M_001;
-                toast = toast.makeText(ItemActivity.this, msg_1, Toast.LENGTH_LONG);
+                toast = toast.makeText(ItemActivity.this, msg_1, Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -321,18 +326,6 @@ public class ItemActivity extends Activity implements View.OnClickListener {
 
         AlertDialog alertDialog = alertDialogbuilder.create();
         alertDialog.show();
-    }
-
-    private void hideBottomUIMenu() {
-        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
-            View v = this.getWindow().getDecorView();
-            v.setSystemUiVisibility(View.GONE);
-        } else if (Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-        }
     }
 
 }
